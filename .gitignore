@@ -38,7 +38,7 @@ out/
 
 ##custom##
 src/main/resources/application-private.properties
-src/main/java/com/icetea/monstu_back/config/CorsConfig.java
+src/main/java/com/icetea/monstu_back/CorsConfig.java
 
 src/main/resources/mo.sql
 src/main/resources/po.sql

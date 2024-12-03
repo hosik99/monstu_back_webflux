@@ -17,8 +17,6 @@ public class MembersConfig {
     public RouterFunction<ServerResponse> MembersRoute(MembersHandler handler){
         return RouterFunctions
                 .route(GET("/members").and(accept(MediaType.APPLICATION_JSON)), handler::getAllMembers);
-//                .route(GET("/members/{id}").and(accept(MediaType.APPLICATION_JSON)), handler::getMemberById)
-//                .andRoute(DELETE("/members/{id}").and(accept(MediaType.APPLICATION_JSON)), handler::deleteMemberById)
 
     }
 

@@ -1,38 +1,34 @@
 package com.icetea.monstu_back.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.relational.core.mapping.Column;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@Document(collection = "post_log")
-public class PostLog {
+@Document(collection = "post_category_log")
+public class CategoryLog {
 
     @Id
     private String id;
 
-    private String title;
-
-    @Field("post_id")
-    private Long postId;
-
-    @Field("author_id")
-    private Long authorId;
-
     @Field("view_count")
-    private Long viewCount;
+    private int viewCount;
 
-    @Field("last_view")
-    private LocalDateTime lastView;
+    @Field("post_category")
+    private String postCategory;
 
     @Builder.Default
-    @Column("created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column("date")
+    private LocalDate date = LocalDate.now();
+
 }
