@@ -11,4 +11,10 @@ public interface CustomPostLogRepository {
 
     // filter를 추가한 Pageable 검색
     Flux<PostLog> findByWithPagination( CustomPageableDTO pageableDTO );
+
+    // Date Filtering
+    Flux<PostLog> findByDateWithPagination( CustomPageableDTO dto );
+
+    // filtering & Date Filtering
+    Flux<PostLog> findWithOption( CustomPageableDTO dto );
 }

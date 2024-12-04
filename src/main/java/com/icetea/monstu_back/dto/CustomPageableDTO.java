@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 /*
     기존의 Pageable의 객체와 비슷한 DTO입니다.
     추가적으로 정렬, 필터 값을 저장해서 사용할 수 있습니다.
@@ -23,4 +25,8 @@ public class CustomPageableDTO {
 
     private String filterOption;
     private String filterValue;
+
+    private String dateOption;
+    private LocalDateTime dateStart;
+    private LocalDateTime dateEnd;
 }

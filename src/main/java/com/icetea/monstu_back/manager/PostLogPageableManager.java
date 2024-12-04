@@ -3,6 +3,7 @@ package com.icetea.monstu_back.manager;
 import com.icetea.monstu_back.dto.CustomPageableDTO;
 import com.icetea.monstu_back.model.PostLog;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 
@@ -33,4 +34,5 @@ public class PostLogPageableManager implements PageableManager<PostLog>{
             default -> String.class;
         };
     }
+
 }

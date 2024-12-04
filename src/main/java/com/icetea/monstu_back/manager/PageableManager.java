@@ -2,8 +2,10 @@ package com.icetea.monstu_back.manager;
 
 import com.icetea.monstu_back.dto.CustomPageableDTO;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Pair;
 import org.springframework.web.reactive.function.server.ServerRequest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public interface PageableManager<T> {
@@ -12,13 +14,22 @@ public interface PageableManager<T> {
     Class<?> convertFilterValue(String filterOption);     //filterOption 타입을 확인
 
     default CustomPageableDTO extractDefault(ServerRequest request) {
+        String dateStartParam = request.queryParam("dateStart").orElse(null);
+        String dateEndParam = request.queryParam("dateEnd").orElse(null);
+
         return CustomPageableDTO.builder()
                 .page(Integer.parseInt(request.pathVariable("page")))
                 .size(Integer.parseInt(request.pathVariable("size")))
+
                 .sortValue(request.queryParam("sortValue").orElse("id"))
                 .sortDirection(request.queryParam("sortDirection").orElse("DESC"))
+
                 .filterOption(request.queryParam("filterOption").orElse(null))
                 .filterValue(request.queryParam("filterValue").orElse(null))
+
+                .dateOption(request.queryParam("dateOption").orElse(null))
+                .dateStart( (dateStartParam != null) ? LocalDate.parse(dateStartParam).atStartOfDay() : null )
+                .dateEnd( (dateEndParam != null) ? LocalDate.parse(dateEndParam).atTime(23, 59, 59) : null )
                 .build();
     }
 
@@ -40,4 +51,7 @@ public interface PageableManager<T> {
             throw new IllegalArgumentException("Unsupported type: " + clazz.getName());
         }
     }
+
 }
+
+

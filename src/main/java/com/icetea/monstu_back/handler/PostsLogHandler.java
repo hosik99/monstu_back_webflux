@@ -33,10 +33,24 @@ public class PostsLogHandler {
                         : ServerResponse.noContent().build());  // return HTTP Status 204
     }
 
-    private Flux<PostLog> getPostLogs( CustomPageableDTO pageableDTO ) {
-        return pageableDTO.getFilterOption() != null && pageableDTO.getFilterValue() != null
-                ? postLogRps.findByWithPagination( pageableDTO )
-                : postLogRps.findWithPagination( pageableDTO );
+    // Get PostLog
+    private Flux<PostLog> getPostLogs( CustomPageableDTO dto ) {
+        Boolean filterBoo = dto.getFilterOption() != null && dto.getFilterValue() != null;
+        Boolean dateFilterBoo = dto.getDateOption() != null && dto.getDateStart() != null && dto.getDateEnd() != null;
+
+        System.out.println(dto.toString());
+        System.out.println("filterBoo: "+filterBoo);
+        System.out.println("DateFilterBoo: "+dateFilterBoo);
+
+        if( filterBoo && dateFilterBoo ){
+            return postLogRps.findWithOption(dto);  // filtering, Date Filtering
+        }else if( !filterBoo && !dateFilterBoo ){
+            return postLogRps.findWithPagination(dto);  //just find
+        } else if ( !filterBoo) {
+            return postLogRps.findByDateWithPagination(dto);    //Date Filtering
+        }else {
+            return postLogRps.findByWithPagination(dto);    // filtering
+        }
     }
 
 }
