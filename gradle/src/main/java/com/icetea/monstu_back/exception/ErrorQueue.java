@@ -1,7 +1,7 @@
 package com.icetea.monstu_back.exception;
 
-import com.icetea.monstu_back.model.log.ErrorLog;
-import com.icetea.monstu_back.repository.log.ErrorLogRepository;
+import com.icetea.monstu_back.model.ErrorLog;
+import com.icetea.monstu_back.repository.ErrorLogRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 

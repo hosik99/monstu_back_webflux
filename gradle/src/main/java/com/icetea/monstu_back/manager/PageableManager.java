@@ -16,14 +16,10 @@ public interface PageableManager<T> {
     default CustomPageableDTO extractDefault(ServerRequest request) {
         String dateStartParam = request.queryParam("dateStart").orElse(null);
         String dateEndParam = request.queryParam("dateEnd").orElse(null);
-        int page = Integer.parseInt(request.pathVariable("page"));
-        int size = Integer.parseInt(request.pathVariable("size"));
-
-        if ( page < 0 || size <= 0) throw new IllegalArgumentException("유효한 Page, Size 값이여야 합니다.");
 
         return CustomPageableDTO.builder()
-                .page(page)
-                .size(size)
+                .page(Integer.parseInt(request.pathVariable("page")))
+                .size(Integer.parseInt(request.pathVariable("size")))
 
                 .sortValue(request.queryParam("sortValue").orElse("id"))
                 .sortDirection(request.queryParam("sortDirection").orElse("DESC"))

@@ -17,6 +17,7 @@ public class MembersConfig {
     public RouterFunction<ServerResponse> MembersRoute(MembersHandler handler){
         return RouterFunctions
                 .route(GET("/members").and(accept(MediaType.APPLICATION_JSON)), handler::getAllMembers);
+
     }
 
 

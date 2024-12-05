@@ -14,8 +14,8 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 @Configuration
 public class PostsLogConfig {
     @Bean
-    public RouterFunction<ServerResponse> PostsLogRouter(PostsLogHandler handler) {
-        return RouterFunctions.nest(path("/post/log"),
+    public RouterFunction<ServerResponse> postsLogRouter(PostsLogHandler handler) {
+        return RouterFunctions.nest(path("/log"),
                 RouterFunctions.route(GET("/{page}/{size}").and(accept(MediaType.APPLICATION_JSON)), handler::getPostLog)
         );
     }

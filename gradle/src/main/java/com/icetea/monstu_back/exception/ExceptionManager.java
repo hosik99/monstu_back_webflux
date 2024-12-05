@@ -1,6 +1,6 @@
 package com.icetea.monstu_back.exception;
 
-import com.icetea.monstu_back.model.log.ErrorLog;
+import com.icetea.monstu_back.model.ErrorLog;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
