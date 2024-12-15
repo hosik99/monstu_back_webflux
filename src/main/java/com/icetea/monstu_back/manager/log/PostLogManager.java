@@ -10,9 +10,9 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import java.time.LocalDateTime;
 
 @Component
-public class PostLogPageableManager implements PageableManager<PostLog> {
+public class PostLogManager implements PageableManager<PostLog> {
 
-    public PostLogPageableManager() {}
+    public PostLogManager() {}
 
     @Override
     public CustomPageableDTO extract(ServerRequest request) {

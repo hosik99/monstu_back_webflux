@@ -24,16 +24,21 @@ repositories {
 }
 
 dependencies {
+
 	//r2dbc
 	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 	// PostgreSQL R2DBC 의존성
 	implementation("org.postgresql:r2dbc-postgresql")  // R2DBC PostgreSQL
 	// MongoDB Reactive 의존성
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive") // MongoDB Reactive
+	implementation("org.mongodb:bson")
 
 	// Spring Security 및 WebFlux 의존성
 //	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+	//Swagger  http://localhost:8080/webjars/swagger-ui/index.html
+	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0")
 
 	// Lombok 의존성
 	compileOnly("org.projectlombok:lombok")

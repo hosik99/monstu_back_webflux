@@ -7,6 +7,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public interface PageableManager<T> {
     CustomPageableDTO extract(ServerRequest request);   // request에서 값을 추출해서 CustomPageableDTO를 반환
@@ -16,6 +17,7 @@ public interface PageableManager<T> {
     default CustomPageableDTO extractDefault(ServerRequest request) {
         String dateStartParam = request.queryParam("dateStart").orElse(null);
         String dateEndParam = request.queryParam("dateEnd").orElse(null);
+
         int page = Integer.parseInt(request.pathVariable("page"));
         int size = Integer.parseInt(request.pathVariable("size"));
 
@@ -32,8 +34,8 @@ public interface PageableManager<T> {
                 .filterValue(request.queryParam("filterValue").orElse(null))
 
                 .dateOption(request.queryParam("dateOption").orElse(null))
-                .dateStart( (dateStartParam != null) ? LocalDate.parse(dateStartParam).atStartOfDay() : null )
-                .dateEnd( (dateEndParam != null) ? LocalDate.parse(dateEndParam).atTime(23, 59, 59) : null )
+                .dateStart( (dateStartParam != null) ? LocalDateTime.parse(dateStartParam) : null )
+                .dateEnd( (dateEndParam != null) ? LocalDateTime.parse(dateEndParam) : null )
                 .build();
     }
 

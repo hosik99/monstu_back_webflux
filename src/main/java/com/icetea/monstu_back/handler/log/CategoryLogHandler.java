@@ -1,11 +1,10 @@
-package com.icetea.monstu_back.handler;
+package com.icetea.monstu_back.handler.log;
 
 import com.icetea.monstu_back.dto.CustomPageableDTO;
 import com.icetea.monstu_back.manager.log.CategoryLogManager;
 import com.icetea.monstu_back.model.log.CategoryLog;
 import com.icetea.monstu_back.model.log.PostLog;
 import com.icetea.monstu_back.repository.custom.CategoryLogCustomRepository;
-import com.icetea.monstu_back.repository.log.CategoryLogRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;

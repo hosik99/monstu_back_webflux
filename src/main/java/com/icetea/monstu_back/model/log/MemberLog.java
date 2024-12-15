@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Builder
@@ -34,7 +35,7 @@ public class MemberLog {
     private LocalDateTime lastLogin;
 
     @Builder.Default
-    @Column("created_at")
+    @Field("created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
 }

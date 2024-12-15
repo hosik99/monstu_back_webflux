@@ -36,7 +36,7 @@ public class Posts {
     @Column("updated_at")
     private LocalDateTime updatedAt;
 
-    private String category;
+    private int category;
 
     private State state;
 

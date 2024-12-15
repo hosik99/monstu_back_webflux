@@ -1,4 +1,4 @@
-package com.icetea.monstu_back.repository;
+package com.icetea.monstu_back.repository.log;
 
 import com.icetea.monstu_back.model.log.MemberLog;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;

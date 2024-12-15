@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /*
     기존의 Pageable의 객체와 비슷한 DTO입니다.
