@@ -1,3 +1,4 @@
+
 plugins {
 	java
 	id("org.springframework.boot") version "3.3.5"
@@ -58,3 +59,4 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+

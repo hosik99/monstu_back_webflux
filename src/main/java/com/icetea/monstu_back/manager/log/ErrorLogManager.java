@@ -1,9 +1,8 @@
 package com.icetea.monstu_back.manager.log;
 
-import com.icetea.monstu_back.dto.CustomPageableDTO;
-import com.icetea.monstu_back.manager.PageableManager;
+import com.icetea.monstu_back.mongo.pageable.CustomPageableDTO;
+import com.icetea.monstu_back.mongo.pageable.PageableManager;
 import com.icetea.monstu_back.model.log.ErrorLog;
-import com.icetea.monstu_back.model.log.PostLog;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;

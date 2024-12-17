@@ -1,10 +1,8 @@
 package com.icetea.monstu_back.handler.log;
 
-import com.icetea.monstu_back.dto.CustomPageableDTO;
+import com.icetea.monstu_back.mongo.pageable.CustomPageableDTO;
 import com.icetea.monstu_back.manager.log.MemberLogManager;
-import com.icetea.monstu_back.model.log.ErrorLog;
 import com.icetea.monstu_back.model.log.MemberLog;
-import com.icetea.monstu_back.model.log.PostLog;
 import com.icetea.monstu_back.repository.custom.MemberLogCustomRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -44,7 +42,7 @@ public class MemberLogHandler {
         System.out.println("dateFilterBoo: " + dateFilterBoo);
 
         if( filterBoo && dateFilterBoo ){
-            return memberLogCustomRps.fincWithOptions(dto);  // filtering, Date Filtering
+            return memberLogCustomRps.findWithOptions(dto);  // filtering, Date Filtering
         }else if( !filterBoo && !dateFilterBoo ){
             return memberLogCustomRps.findWithPagination(dto);  //just find
         } else if ( !filterBoo) {

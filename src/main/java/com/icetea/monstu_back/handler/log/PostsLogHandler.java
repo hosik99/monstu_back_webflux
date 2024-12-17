@@ -1,12 +1,11 @@
 package com.icetea.monstu_back.handler.log;
 
-import com.icetea.monstu_back.dto.CustomPageableDTO;
+import com.icetea.monstu_back.mongo.pageable.CustomPageableDTO;
 import com.icetea.monstu_back.manager.log.PostLogManager;
 import com.icetea.monstu_back.model.log.PostLog;
 import com.icetea.monstu_back.repository.PostsRepository;
 import com.icetea.monstu_back.repository.custom.PostLogCustomRepository;
 import com.icetea.monstu_back.repository.log.PostLogRepository;
-import org.bson.types.ObjectId;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -50,12 +49,8 @@ public class PostsLogHandler {
         Boolean filterBoo = dto.getFilterOption() != null && dto.getFilterValue() != null;
         Boolean dateFilterBoo = dto.getDateOption() != null && dto.getDateStart() != null && dto.getDateEnd() != null;
 
-        System.out.println(dto);
-        System.out.println("filterBoo: " + filterBoo);
-        System.out.println("dateFilterBoo: " + dateFilterBoo);
-
         if( filterBoo && dateFilterBoo ){
-            return postLogCustomRps.fincWithOptions(dto);  // filtering, Date Filtering
+            return postLogCustomRps.findWithOptions(dto);  // filtering, Date Filtering
         }else if( !filterBoo && !dateFilterBoo ){
             return postLogCustomRps.findWithPagination(dto);  //just find
         } else if ( !filterBoo) {

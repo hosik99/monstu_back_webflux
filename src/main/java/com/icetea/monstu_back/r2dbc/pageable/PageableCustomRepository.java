@@ -1,6 +1,5 @@
-package com.icetea.monstu_back.repository.custom;
+package com.icetea.monstu_back.r2dbc.pageable;
 
-import com.icetea.monstu_back.dto.CustomPageableDTO;
 import reactor.core.publisher.Flux;
 
 public interface PageableCustomRepository<T> {
@@ -14,5 +13,5 @@ public interface PageableCustomRepository<T> {
     Flux<T> findByDateWithPagination( CustomPageableDTO dto );
 
     // filtering & Date Filtering
-    Flux<T> fincWithOptions( CustomPageableDTO dto );
+    Flux<T> findWithOptions( CustomPageableDTO dto );
 }

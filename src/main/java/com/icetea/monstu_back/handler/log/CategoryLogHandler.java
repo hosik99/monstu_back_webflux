@@ -1,6 +1,6 @@
 package com.icetea.monstu_back.handler.log;
 
-import com.icetea.monstu_back.dto.CustomPageableDTO;
+import com.icetea.monstu_back.mongo.pageable.CustomPageableDTO;
 import com.icetea.monstu_back.manager.log.CategoryLogManager;
 import com.icetea.monstu_back.model.log.CategoryLog;
 import com.icetea.monstu_back.model.log.PostLog;
@@ -43,7 +43,7 @@ public class CategoryLogHandler {
         System.out.println("dateFilterBoo: " + dateFilterBoo);
 
         if( filterBoo && dateFilterBoo ){
-            return cateLogCustomRps.fincWithOptions(dto);  // filtering, Date Filtering
+            return cateLogCustomRps.findWithOptions(dto);  // filtering, Date Filtering
         }else if( !filterBoo && !dateFilterBoo ){
             return cateLogCustomRps.findWithPagination(dto);  //just find
         } else if ( !filterBoo) {

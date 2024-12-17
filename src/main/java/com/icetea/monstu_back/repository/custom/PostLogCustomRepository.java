@@ -1,8 +1,9 @@
 package com.icetea.monstu_back.repository.custom;
 
-import com.icetea.monstu_back.dto.CustomPageableDTO;
+import com.icetea.monstu_back.mongo.pageable.CustomPageableDTO;
 import com.icetea.monstu_back.manager.log.PostLogManager;
 import com.icetea.monstu_back.model.log.PostLog;
+import com.icetea.monstu_back.mongo.pageable.PageableCustomRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 @Repository
 public class PostLogCustomRepository implements PageableCustomRepository<PostLog> {
@@ -47,8 +47,6 @@ public class PostLogCustomRepository implements PageableCustomRepository<PostLog
 
         ZonedDateTime dateStartZoned = dto.getDateStart().atZone(ZoneOffset.UTC);
         ZonedDateTime dateEndZoned = dto.getDateEnd().atZone(ZoneOffset.UTC);
-        System.out.println(dateStartZoned.toInstant().toString());
-        System.out.println(dateEndZoned.toInstant().toString());
 
         Query query = new Query()
                 .addCriteria( Criteria.where( dto.getDateOption() ).gte( dateStartZoned.toInstant() ).lte( dateEndZoned.toInstant() ) )
@@ -58,7 +56,7 @@ public class PostLogCustomRepository implements PageableCustomRepository<PostLog
 
     // 정렬, 필터링, Date 필터링
     @Override
-    public Flux<PostLog> fincWithOptions( CustomPageableDTO dto ) {
+    public Flux<PostLog> findWithOptions( CustomPageableDTO dto ) {
         Class<?> type = pageableManager.convertFilterValue( dto.getFilterOption() );
 
         Query query = new Query()

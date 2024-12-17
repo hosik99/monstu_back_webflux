@@ -1,8 +1,9 @@
 package com.icetea.monstu_back.repository.custom;
 
-import com.icetea.monstu_back.dto.CustomPageableDTO;
+import com.icetea.monstu_back.mongo.pageable.CustomPageableDTO;
 import com.icetea.monstu_back.manager.log.CategoryLogManager;
 import com.icetea.monstu_back.model.log.CategoryLog;
+import com.icetea.monstu_back.mongo.pageable.PageableCustomRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -49,7 +50,7 @@ public class CategoryLogCustomRepository implements PageableCustomRepository<Cat
 
     // 정렬, 필터링, Date 필터링
     @Override
-    public Flux<CategoryLog> fincWithOptions( CustomPageableDTO dto ) {
+    public Flux<CategoryLog> findWithOptions( CustomPageableDTO dto ) {
         Class<?> type = cateLogManager.convertFilterValue( dto.getFilterOption() );
 
         Query query = new Query()

@@ -1,8 +1,9 @@
 package com.icetea.monstu_back.repository.custom;
 
-import com.icetea.monstu_back.dto.CustomPageableDTO;
+import com.icetea.monstu_back.mongo.pageable.CustomPageableDTO;
 import com.icetea.monstu_back.manager.log.ErrorLogManager;
 import com.icetea.monstu_back.model.log.ErrorLog;
+import com.icetea.monstu_back.mongo.pageable.PageableCustomRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
 @Repository
-public class ErrorLogCustomRepository implements PageableCustomRepository<ErrorLog>{
+public class ErrorLogCustomRepository implements PageableCustomRepository<ErrorLog> {
 
     private final ReactiveMongoTemplate mongoTemplate;
     private final ErrorLogManager errorLogManager;
@@ -50,7 +51,7 @@ public class ErrorLogCustomRepository implements PageableCustomRepository<ErrorL
 
     // 정렬, 필터링, Date 필터링
     @Override
-    public Flux<ErrorLog> fincWithOptions( CustomPageableDTO dto ) {
+    public Flux<ErrorLog> findWithOptions( CustomPageableDTO dto ) {
         Class<?> type = errorLogManager.convertFilterValue( dto.getFilterOption() );
 
         Query query = new Query()

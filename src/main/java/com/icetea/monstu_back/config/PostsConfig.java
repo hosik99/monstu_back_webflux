@@ -14,8 +14,8 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 public class PostsConfig {
     @Bean
     public RouterFunction<ServerResponse> postsRouter(PostsHandler handler) {
-        return RouterFunctions.nest(path("/posts"),
-                        RouterFunctions.route(GET("/{page}/{size}").and(accept(MediaType.APPLICATION_JSON)), handler::getAllPosts)
+        return RouterFunctions.nest(path("/post"),
+                        RouterFunctions.route(GET("/{page}/{size}").and(accept(MediaType.APPLICATION_JSON)), handler::getPostByPageable)
         );
     }
 
