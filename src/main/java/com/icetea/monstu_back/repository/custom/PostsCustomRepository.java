@@ -5,10 +5,14 @@ import com.icetea.monstu_back.enums.State;
 import com.icetea.monstu_back.manager.PostsManager;
 import com.icetea.monstu_back.r2dbc.pageable.CustomPageableDTO;
 import com.icetea.monstu_back.r2dbc.pageable.PageableCustomRepository;
-import com.icetea.monstu_back.sqlBuilder.SqlBuilder;
+import com.icetea.monstu_back.r2dbc.sqlBuilder.SqlBuilder;
+import com.kclass.generated.KMembers;
+import com.kclass.generated.KPostCategory;
+import com.kclass.generated.KPosts;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
+
 
 import java.time.LocalDateTime;
 
@@ -30,6 +34,10 @@ public class PostsCustomRepository implements PageableCustomRepository<PrePostsD
     // 정렬검색
     @Override
     public Flux<PrePostsDTO> findWithPagination(CustomPageableDTO pageableDTO) {
+        KPosts kPosts = new KPosts().withNick("p");
+        KMembers kMembers = new KMembers().withNick("m");
+        KPostCategory kPostCategory = new KPostCategory().withNick("c");
+
         String sql  = sqlBuilder
                 .select( "p.id", "m.name", "p.title", "p.thumbnail_url","p.created_at","p.updated_at","c.category", "p.state", "p.is_public" )
                 .from("posts").as("p")

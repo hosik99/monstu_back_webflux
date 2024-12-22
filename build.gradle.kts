@@ -1,8 +1,10 @@
+import org.gradle.plugins.ide.idea.model.IdeaModel
 
 plugins {
 	java
 	id("org.springframework.boot") version "3.3.5"
 	id("io.spring.dependency-management") version "1.1.6"
+	id("application")
 }
 
 group = "com.icetea"
@@ -41,6 +43,9 @@ dependencies {
 	//Swagger  http://localhost:8080/webjars/swagger-ui/index.html
 	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0")
 
+	//anotation
+	implementation("org.reflections:reflections:0.10.2")
+
 	// Lombok 의존성
 	compileOnly("org.projectlombok:lombok")
 
@@ -58,5 +63,31 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+// application 플러그인 설정 (mainClass 설정)  ./gradlew build
+application {
+	mainClass.set("com.icetea.monstu_back.r2dbc.sqlBuilder.KClassGenerator")
+}
+
+// `generateKClasses` task 정의
+tasks.register<JavaExec>("generateKClasses") {
+	classpath = sourceSets.main.get().runtimeClasspath
+	mainClass.set("com.icetea.monstu_back.r2dbc.sqlBuilder.KClassGenerator")
+	doLast {
+		// 새로 생성된 클래스들을 sourceSets의 srcDirs에 추가
+		sourceSets.main.get().java.srcDir("src/main/generated-classes")
+	}
+}
+
+// `build` 태스크 실행 후 `generateKClasses`가 실행되도록 설정
+tasks.named("build") {
+	dependsOn("generateKClasses")  // `build` 태스크가 실행되면 `generateKClasses`도 실행되도록 설정
+}
+
+sourceSets {
+	main {
+			java.srcDir("src/generated-classes")  // 새로 생성된 클래스 파일 경로
+	}
 }
 

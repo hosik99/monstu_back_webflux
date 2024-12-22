@@ -1,18 +1,18 @@
 package com.icetea.monstu_back.model;
 
 import com.icetea.monstu_back.enums.State;
+import com.icetea.monstu_back.r2dbc.sqlBuilder.GenerateKClass;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
-import java.util.Stack;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 @Builder
+@GenerateKClass
 @Table("posts")
 public class Posts {
 

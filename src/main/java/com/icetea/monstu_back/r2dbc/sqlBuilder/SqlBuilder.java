@@ -1,4 +1,4 @@
-package com.icetea.monstu_back.sqlBuilder;
+package com.icetea.monstu_back.r2dbc.sqlBuilder;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;

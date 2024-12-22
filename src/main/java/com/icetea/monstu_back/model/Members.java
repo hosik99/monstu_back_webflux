@@ -2,6 +2,7 @@ package com.icetea.monstu_back.model;
 
 import com.icetea.monstu_back.enums.Role;
 import com.icetea.monstu_back.enums.Status;
+import com.icetea.monstu_back.r2dbc.sqlBuilder.GenerateKClass;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@GenerateKClass
 @Table("members")
 public class Members {
 

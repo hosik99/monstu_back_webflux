@@ -26,6 +26,7 @@ public class PostsDTO implements PostsDTOInterface {
 
     private String thumbnailUrl;
 
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt;
