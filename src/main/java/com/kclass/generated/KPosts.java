@@ -1,5 +1,7 @@
 package com.kclass.generated;
 
+import com.kclass.generated.k.KClass; 
+
 public class KPosts implements KClass {
     public String createdAt = "created_at";
     public String isPublic = "is_public";
@@ -12,6 +14,7 @@ public class KPosts implements KClass {
     public String content = "content";
     public String thumbnailUrl = "thumbnail_url";
     public String updatedAt = "updated_at";
+	public String nick = null;
 
     public KPosts withNick(String nick) {
         this.createdAt = nick + "." + this.createdAt;
@@ -25,6 +28,7 @@ public class KPosts implements KClass {
         this.content = nick + "." + this.content;
         this.thumbnailUrl = nick + "." + this.thumbnailUrl;
         this.updatedAt = nick + "." + this.updatedAt;
+		this.nick = nick;
         return this;
     }
 }

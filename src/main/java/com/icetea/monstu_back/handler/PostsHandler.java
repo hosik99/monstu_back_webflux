@@ -40,18 +40,7 @@ public class PostsHandler {
 
     // Get Posts With Filtering
     private Flux<PrePostsDTO> getPosts(CustomPageableDTO dto) {
-        Boolean filterBoo = dto.getFilterOption() != null && dto.getFilterValue() != null;
-        Boolean dateFilterBoo = dto.getDateOption() != null && dto.getDateStart() != null && dto.getDateEnd() != null;
-
-        if( filterBoo && dateFilterBoo ){
-            return postsCustomRps.findWithOptions(dto);  // filtering, Date Filtering
-        }else if( !filterBoo && !dateFilterBoo ){
-            return postsCustomRps.findWithPagination(dto);  //just find
-        } else if ( !filterBoo) {
-            return postsCustomRps.findByDateWithPagination(dto);    //Date Filtering
-        }else {
-            return postsCustomRps.findByWithPagination(dto);    // filtering
-        }
+        return postsCustomRps.findWithPagination(dto);
     }
 
 

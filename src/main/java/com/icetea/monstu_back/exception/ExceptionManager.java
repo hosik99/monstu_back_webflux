@@ -2,10 +2,13 @@ package com.icetea.monstu_back.exception;
 
 import com.icetea.monstu_back.model.log.ErrorLog;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.util.Arrays;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -49,6 +52,8 @@ public class ExceptionManager {
     public Mono<Void> writeErrorResponse(ServerWebExchange exchange, HttpStatusCode status, String message){
         String finalMessage = message != null ? message : getStateErrorMessage(status) ;
         exchange.getResponse().setStatusCode(status);   //exchange.getResponse() -> 응답의 상태 코드와 바디를 설정
+        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
+
         return exchange.getResponse().writeWith(
                 Mono.just(exchange.getResponse()
                         .bufferFactory()

@@ -4,11 +4,13 @@ import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.*;
 
 // with R2DBC, Lombok
+@Component
 public class AnnotationReader {
 
     // 클래스명 -> 컬럼명 맵
@@ -77,14 +79,4 @@ public class AnnotationReader {
 
 }
 
-//// 초기화 시점에 @Table과 @Column 정보를 읽어 맵에 저장
-//        AnnotationReader.init();
-//
-//// Post 클래스의 컬럼 맵을 가져와서 사용
-//Map<String, String> postColumnMapping = AnnotationReader.getColumnMapping(Post.class);
-//
-//// 결과 확인
-//        System.out.println("Table: " + postColumnMapping.get("table"));
-//        System.out.println("id column: " + postColumnMapping.get("id"));
-//        System.out.println("stName column: " + postColumnMapping.get("stName"));
 

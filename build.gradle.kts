@@ -70,24 +70,38 @@ application {
 	mainClass.set("com.icetea.monstu_back.r2dbc.sqlBuilder.KClassGenerator")
 }
 
-// `generateKClasses` task 정의
+// 기존 생성된 파일을 삭제하는 태스크 추가
+tasks.register<Delete>("cleanGeneratedClasses") {
+	delete(fileTree("src/main/java/com/kclass/generated"))
+}
+
+// `generateKClasses` task 정의  ./gradlew generateKClasses. 생성된 클래스가 build 프로세스에 포함되어 컴파일이 진행
 tasks.register<JavaExec>("generateKClasses") {
 	classpath = sourceSets.main.get().runtimeClasspath
 	mainClass.set("com.icetea.monstu_back.r2dbc.sqlBuilder.KClassGenerator")
+
 	doLast {
 		// 새로 생성된 클래스들을 sourceSets의 srcDirs에 추가
-		sourceSets.main.get().java.srcDir("src/main/generated-classes")
+		val generatedDir = File("src/main/java/com/kclass/generated")
+		if (generatedDir.exists()) {
+			sourceSets.main.get().java.srcDir(generatedDir)
+		}
 	}
 }
 
-// `build` 태스크 실행 후 `generateKClasses`가 실행되도록 설정
 tasks.named("build") {
-	dependsOn("generateKClasses")  // `build` 태스크가 실행되면 `generateKClasses`도 실행되도록 설정
+	dependsOn("generateKClasses")  //generateKClasses가 먼저 실행되고, 그 후에 build 태스크가 진행
 }
+//tasks.named("compileJava") {
+//	dependsOn("generateKClasses") // `compileJava` 이전에 실행되도록 설정
+//}
 
-sourceSets {
-	main {
-			java.srcDir("src/generated-classes")  // 새로 생성된 클래스 파일 경로
+java {
+	sourceSets {
+		main {
+			java.srcDir("src/main/java/com/kclass/generated")
+		}
 	}
 }
 
+//./gradlew clean build

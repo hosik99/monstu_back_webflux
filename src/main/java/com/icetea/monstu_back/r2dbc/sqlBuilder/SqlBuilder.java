@@ -14,28 +14,25 @@ public class SqlBuilder {
         this.query = new StringBuilder();
     }
 
-    // p.title -> p.title AS p_title
-    private String[] asCasting(String [] fields){
-        return Arrays.stream(fields)
-                .map(field -> {
-                    if (field.contains(".")) {
-                        String[] f = field.split("\\.");
-                        return field + " AS "+ f[0] + "_" + f[1];  // 테이블명_컬럼명 형식
-                    }
-                    return field;  // 점이 없으면 그대로 사용
-                })
-                .toArray(String[]::new);
-    }
-
     public SqlBuilder select(String... fields) {
-        if (fields.length == 0) { query.append("SELECT *"); return this; }
-        String[] processedFields = asCasting(fields);
-        query.append("SELECT ").append(String.join(", ", processedFields));
+        if (fields.length == 0) { query.append("SELECT *"); return this; }  //.from() 필요
+        query.append("SELECT ").append(String.join(", ", fields));
         return this;
     }
 
-    public SqlBuilder from(String table) {
-        query.append(" FROM ").append(table);
+    // p.table -> ["p","table"]
+    private String[] splitTableName(String tableName) {
+        if(tableName.contains(".")) return tableName.split("\\.");
+        return null;
+    }
+
+    public SqlBuilder from(String tableName) {
+        String[] array = splitTableName(tableName);
+        if(array != null){
+            query.append(" FROM ").append(array[1]).append(" AS ").append(array[0]);
+        }else{
+            query.append(" FROM ").append(tableName);
+        }
         return this;
     }
 
@@ -44,8 +41,13 @@ public class SqlBuilder {
         return this;
     }
 
-    public SqlBuilder join(String table) {
-        query.append(" JOIN ").append(table);
+    public SqlBuilder join(String tableName) {
+        String[] array = splitTableName(tableName);
+        if(array != null){
+            query.append(" JOIN ").append(array[1]).append(" AS ").append(array[0]);
+        }else{
+            query.append(" JOIN ").append(tableName);
+        }
         return this;
     }
 
@@ -54,8 +56,18 @@ public class SqlBuilder {
         return this;
     }
 
+    public SqlBuilder between(String one,String two) {
+        query.append(" BETWEEN ").append(one).append(" AND ").append(two);
+        return this;
+    }
+
     public SqlBuilder where(String condition) {
         query.append(" WHERE ").append(condition);
+        return this;
+    }
+
+    public SqlBuilder orderBy(String sortValue,String direction) {
+        query.append(" ORDER BY ").append(sortValue).append(" ").append(direction);
         return this;
     }
 
@@ -100,6 +112,7 @@ public class SqlBuilder {
 
     public String build() {
         String result = query.toString().trim();
+        System.out.println(result);
         clear();
         return result;
     }
@@ -108,12 +121,5 @@ public class SqlBuilder {
         query.setLength(0); // 쿼리 초기화
     }
 
-    private static String toSnakeCase(String camelCase) {
-        if (camelCase == null || camelCase.isEmpty()) {
-            return camelCase;
-        }
-        return camelCase
-                .replaceAll("([a-z])([A-Z])", "$1_$2") // 소문자와 대문자 경계에 "_" 추가
-                .toLowerCase(); // 소문자로 변환
-    }
+
 }

@@ -1,5 +1,7 @@
 package com.kclass.generated;
 
+import com.kclass.generated.k.KClass; 
+
 public class KMembers implements KClass {
     public String createdAt = "created_at";
     public String password = "password";
@@ -9,6 +11,7 @@ public class KMembers implements KClass {
     public String table = "members";
     public String status = "status";
     public String updatedAt = "updated_at";
+	public String nick = null;
 
     public KMembers withNick(String nick) {
         this.createdAt = nick + "." + this.createdAt;
@@ -19,6 +22,7 @@ public class KMembers implements KClass {
         this.table = nick + "." + this.table;
         this.status = nick + "." + this.status;
         this.updatedAt = nick + "." + this.updatedAt;
+		this.nick = nick;
         return this;
     }
 }

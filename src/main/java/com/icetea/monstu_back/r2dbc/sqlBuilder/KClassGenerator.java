@@ -9,7 +9,8 @@ import java.util.Map;
 public class KClassGenerator {
 
     private static final String PACKAGE_NAME = "com.kclass.generated";
-    private static final String BASE_PATH = "src/generated-classes";
+    private static final String INTERFACE_PACKAGE_NAME = "com.kclass.generated.k";
+    private static final String BASE_PATH = "src/main/java";
 
     public void process() {
         createPackageStructure();
@@ -18,8 +19,8 @@ public class KClassGenerator {
     }
 
     private static void generateKClassInterface() {
-        String classContent = String.format("package %s;\n\npublic interface KClass {}", PACKAGE_NAME);
-        saveClassToFile("KClass", classContent);
+        String classContent = String.format("package %s;\n\npublic interface KClass {}", INTERFACE_PACKAGE_NAME);
+        saveClassToFile("KClass", classContent,INTERFACE_PACKAGE_NAME);
     }
 
     private static void generateKClasses() {
@@ -29,13 +30,14 @@ public class KClassGenerator {
         for (Map.Entry<String, Map<String, String>> entry : classInfo.entrySet()) {
             String className = "K" + entry.getKey();
             String classContent = generateClassContent(entry, className);
-            saveClassToFile(className, classContent);
+            saveClassToFile(className, classContent,PACKAGE_NAME);
         }
     }
 
     private static String generateClassContent(Map.Entry<String, Map<String, String>> entry, String className) {
         StringBuilder classContent = new StringBuilder();
         classContent.append("package ").append(PACKAGE_NAME).append(";\n\n")
+                .append("import ").append(INTERFACE_PACKAGE_NAME).append(".KClass; \n\n")
                 .append("public class ").append(className).append(" implements KClass {\n");
 
         StringBuilder withNickMethod = new StringBuilder();
@@ -50,6 +52,10 @@ public class KClassGenerator {
                     .append(" = nick + \".\" + this.").append(fieldName).append(";\n");
         }
 
+        //nick 필드 추가, withNick() - nick 초기화 추가
+        classContent.append("\t").append("public String nick = null;").append("\n");
+        withNickMethod.append("\t\t").append("this.nick = nick;").append("\n");
+
         classContent.append(withNickMethod)
                 .append("        return this;\n")
                 .append("    }\n")
@@ -58,8 +64,8 @@ public class KClassGenerator {
         return classContent.toString();
     }
 
-    private static void saveClassToFile(String className, String classContent) {
-        File file = new File(BASE_PATH + "/" + PACKAGE_NAME.replace('.', '/') + "/" + className + ".java");
+    private static void saveClassToFile(String className, String classContent,String packageName) {
+        File file = new File(BASE_PATH + "/" + packageName.replace('.', '/') + "/" + className + ".java");
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(classContent);
@@ -70,7 +76,7 @@ public class KClassGenerator {
     }
 
     private static void createPackageStructure() {
-        File packageDir = new File(BASE_PATH + "/" + PACKAGE_NAME.replace('.', '/'));
+        File packageDir = new File(BASE_PATH + "/" + INTERFACE_PACKAGE_NAME.replace('.', '/'));
         if (!packageDir.exists() && !packageDir.mkdirs()) {
             throw new RuntimeException("디렉토리 생성 실패: " + packageDir.getPath());
         }

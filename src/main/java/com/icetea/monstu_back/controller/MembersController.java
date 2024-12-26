@@ -21,8 +21,11 @@ public class MembersController {
         this.membersService = membersService;
     }
 
-    @GetMapping
+    @GetMapping("/m")
     public Members getMembers() {
+        String nullValue = null;
+        nullValue.length();
+
         return new Members(1L,"name","password", Status.ACTIVE, Role.GUEST, LocalDateTime.now(),LocalDateTime.now());
     }
 }

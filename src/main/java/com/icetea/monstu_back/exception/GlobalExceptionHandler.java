@@ -1,6 +1,7 @@
 package com.icetea.monstu_back.exception;
 
 import com.mongodb.lang.NonNull;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -8,7 +9,11 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
 
+/*
+    WebExceptionHandler -> 클라이언트 요청에 대한 응답을 생성하는 과정에서 발생하는 예외를 처리
+*/
 @Component
+@Order(-2)  //기본 WebExceptionHandler보다 우선 순위를 높게 설정
 public class GlobalExceptionHandler implements WebExceptionHandler {
 
     private final ExceptionManager exceptionManager;
@@ -19,6 +24,7 @@ public class GlobalExceptionHandler implements WebExceptionHandler {
 
     @Override
     public @NonNull Mono<Void> handle(@NonNull ServerWebExchange exchange, Throwable ex) {
+        System.out.println("Error-------");
         return switch (ex) {
             case ResponseStatusException rse -> handleResponseStatusException(exchange, rse);
             case IllegalArgumentException iae -> handleIllegalArgumentException(exchange, 500, iae.getMessage()==null ? "Illegal Argument exception occurred" : iae.getMessage());
@@ -51,3 +57,4 @@ public class GlobalExceptionHandler implements WebExceptionHandler {
     }
 
 }
+

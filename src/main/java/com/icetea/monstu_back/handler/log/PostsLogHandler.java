@@ -62,6 +62,7 @@ public class PostsLogHandler {
 
     @Transactional
     public Mono<ServerResponse> deleteAllByIdPostLog(ServerRequest request) {
+
         /* 요청 본문을 List<String> 형식으로 변환, 배열 또는 리스트와 같은 컬렉션 타입의 데이터를 받을 때 사용*/
         return request.bodyToMono(new ParameterizedTypeReference<List<String>>() {})
                 .flatMap(postLogRps::deleteAllById)
