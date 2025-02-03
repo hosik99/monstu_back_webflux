@@ -25,6 +25,7 @@ public class GlobalExceptionHandler implements WebExceptionHandler {
     @Override
     public @NonNull Mono<Void> handle(@NonNull ServerWebExchange exchange, Throwable ex) {
         System.out.println("Error-------");
+        System.out.println(ex.getMessage());
         return switch (ex) {
             case ResponseStatusException rse -> handleResponseStatusException(exchange, rse);
             case IllegalArgumentException iae -> handleIllegalArgumentException(exchange, 500, iae.getMessage()==null ? "Illegal Argument exception occurred" : iae.getMessage());

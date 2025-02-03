@@ -4,7 +4,6 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.3.5"
 	id("io.spring.dependency-management") version "1.1.6"
-	id("application")
 }
 
 group = "com.icetea"
@@ -43,6 +42,9 @@ dependencies {
 	//Swagger  http://localhost:8080/webjars/swagger-ui/index.html
 	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0")
 
+	//Stanford CoreNLP
+	implementation("edu.stanford.nlp:stanford-corenlp:4.5.7")
+
 	//anotation
 	implementation("org.reflections:reflections:0.10.2")
 
@@ -65,43 +67,3 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-// application 플러그인 설정 (mainClass 설정)  ./gradlew build
-application {
-	mainClass.set("com.icetea.monstu_back.r2dbc.sqlBuilder.KClassGenerator")
-}
-
-// 기존 생성된 파일을 삭제하는 태스크 추가
-tasks.register<Delete>("cleanGeneratedClasses") {
-	delete(fileTree("src/main/java/com/kclass/generated"))
-}
-
-// `generateKClasses` task 정의  ./gradlew generateKClasses. 생성된 클래스가 build 프로세스에 포함되어 컴파일이 진행
-tasks.register<JavaExec>("generateKClasses") {
-	classpath = sourceSets.main.get().runtimeClasspath
-	mainClass.set("com.icetea.monstu_back.r2dbc.sqlBuilder.KClassGenerator")
-
-	doLast {
-		// 새로 생성된 클래스들을 sourceSets의 srcDirs에 추가
-		val generatedDir = File("src/main/java/com/kclass/generated")
-		if (generatedDir.exists()) {
-			sourceSets.main.get().java.srcDir(generatedDir)
-		}
-	}
-}
-
-tasks.named("build") {
-	dependsOn("generateKClasses")  //generateKClasses가 먼저 실행되고, 그 후에 build 태스크가 진행
-}
-//tasks.named("compileJava") {
-//	dependsOn("generateKClasses") // `compileJava` 이전에 실행되도록 설정
-//}
-
-java {
-	sourceSets {
-		main {
-			java.srcDir("src/main/java/com/kclass/generated")
-		}
-	}
-}
-
-//./gradlew clean build
